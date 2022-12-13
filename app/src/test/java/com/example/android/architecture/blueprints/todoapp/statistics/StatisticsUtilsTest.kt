@@ -54,4 +54,23 @@ internal class StatisticsUtilsTest{
         assertThat(result.activeTasksPercent, `is` (60f))
     }
 
+    @Test
+    fun getActiveAndCompletedStats_error_returnsZeros() {
+        //Error cargando los datos
+        val result = getActiveAndCompletedStats(null)
+
+        // Both active and completed tasks are 0
+        assertThat(result.activeTasksPercent, `is`(0f))
+        assertThat(result.completedTasksPercent, `is`(0f))
+    }
+
+    @Test
+    fun getActiveAndCompletedStats_empty_returnsZeros() {
+        //Lista de tareas vacia
+        val result = getActiveAndCompletedStats(emptyList())
+
+        // Both active and completed tasks are 0
+        assertThat(result.activeTasksPercent, `is`(0f))
+        assertThat(result.completedTasksPercent, `is`(0f))
+    }
 }
