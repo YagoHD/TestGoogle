@@ -1,16 +1,24 @@
 package com.example.android.architecture.blueprints.todoapp.tasks
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.hamcrest.MatcherAssert.assertThat
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import getOrAwaitValue
+import org.hamcrest.CoreMatchers.not
+import org.hamcrest.CoreMatchers.nullValue
 
 @RunWith(AndroidJUnit4::class)
-internal class TasksViewModelTest{
+class TasksViewModelTest {
+
+    @get:Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
 
     @Test
     fun addNewTask_setsNewTaskEvent() {
-
         // Given a fresh ViewModel
         val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
 
@@ -18,6 +26,8 @@ internal class TasksViewModelTest{
         tasksViewModel.addNewTask()
 
         // Then the new task event is triggered
-        // TODO test LiveData
+        val value = tasksViewModel.newTaskEvent.getOrAwaitValue()
+
+        assertThat(value.getContentIfNotHandled(), not(nullValue()))
     }
 }
