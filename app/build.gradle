@@ -4,6 +4,11 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
@@ -31,6 +36,11 @@ dependencies {
 
     // Only for computer with M1 CPU
     kapt "org.xerial:sqlite-jdbc:3.36.0"
+
+    // AndroidX Test - JVM testing
+    testImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
+    testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
+    testImplementation 'org.robolectric:robolectric:4.8'
 
     // App dependencies
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
@@ -63,4 +73,7 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+
 }
