@@ -29,6 +29,9 @@ android {
 
 dependencies {
 
+    // Only for computer with M1 CPU
+    kapt "org.xerial:sqlite-jdbc:3.36.0"
+
     // App dependencies
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayoutVersion"
