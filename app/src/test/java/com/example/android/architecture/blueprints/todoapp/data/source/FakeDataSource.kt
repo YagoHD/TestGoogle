@@ -2,7 +2,10 @@ package com.example.android.architecture.blueprints.todoapp.data.source
 
 import androidx.lifecycle.LiveData
 import com.example.android.architecture.blueprints.todoapp.data.Result
+import com.example.android.architecture.blueprints.todoapp.data.Result.Error
+import com.example.android.architecture.blueprints.todoapp.data.Result.Success
 import com.example.android.architecture.blueprints.todoapp.data.Task
+
 
 class FakeDataSource(var tasks: MutableList<Task>? = mutableListOf()) : TasksDataSource {
     override fun observeTasks(): LiveData<Result<List<Task>>> {
@@ -10,7 +13,10 @@ class FakeDataSource(var tasks: MutableList<Task>? = mutableListOf()) : TasksDat
     }
 
     override suspend fun getTasks(): Result<List<Task>> {
-        TODO("Not yet implemented")
+        tasks?.let { return Success(ArrayList(it)) }
+        return Error(
+            Exception("Tasks not found")
+        )
     }
 
     override suspend fun refreshTasks() {
@@ -30,7 +36,7 @@ class FakeDataSource(var tasks: MutableList<Task>? = mutableListOf()) : TasksDat
     }
 
     override suspend fun saveTask(task: Task) {
-        TODO("Not yet implemented")
+        tasks?.add(task)
     }
 
     override suspend fun completeTask(task: Task) {
@@ -54,7 +60,7 @@ class FakeDataSource(var tasks: MutableList<Task>? = mutableListOf()) : TasksDat
     }
 
     override suspend fun deleteAllTasks() {
-        TODO("Not yet implemented")
+        tasks?.clear()
     }
 
     override suspend fun deleteTask(taskId: String) {
